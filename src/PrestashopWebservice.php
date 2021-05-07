@@ -6,7 +6,7 @@ namespace Jupi007\PrestashopWebserviceExtra;
 
 use PrestaShopWebservice as PrestaShopWebserviceLib;
 
-final class PrestashopWebservice extends PrestaShopWebserviceLib
+class PrestashopWebservice extends PrestaShopWebserviceLib
 {
     public function getUrl(): string
     {
