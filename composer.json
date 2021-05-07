@@ -1,0 +1,22 @@
+{
+    "name": "jupi007/prestashop-webservice-lib-extra",
+    "description": "A fully object-oriented way to interact with Prestashop webservice build on top of Prestashop Webservice lib",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jupi007",
+            "email": "paul.kepinski@orange.fr"
+        }
+    ],
+    "require": {
+    	"prestashop/prestashop-webservice-lib": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jupi007\\PrestashopWebserviceExtra\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

@@ -1,0 +1,65 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "4e402a0ce1620e2bbd7db3d340056be6",
+    "packages": [
+        {
+            "name": "prestashop/prestashop-webservice-lib",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/PrestaShop/PrestaShop-webservice-lib.git",
+                "reference": "603015e4c7a14363703be2a7a382a3395918dd8e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/PrestaShop/PrestaShop-webservice-lib/zipball/603015e4c7a14363703be2a7a382a3395918dd8e",
+                "reference": "603015e4c7a14363703be2a7a382a3395918dd8e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-libxml": "*",
+                "ext-simplexml": "*",
+                "php": ">= 5.3.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "PSWebServiceLibrary.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "PrestaShop SA",
+                    "email": "contact@prestashop.com"
+                }
+            ],
+            "description": "PrestaShop Webservice access library",
+            "support": {
+                "issues": "https://github.com/PrestaShop/PrestaShop-webservice-lib/issues",
+                "source": "https://github.com/PrestaShop/PrestaShop-webservice-lib/tree/master"
+            },
+            "time": "2021-04-23T12:58:14+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": {
+        "prestashop/prestashop-webservice-lib": 20
+    },
+    "prefer-stable": true,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
+}
