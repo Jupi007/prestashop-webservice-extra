@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Jupi007\PrestashopWebserviceBundle\Services;
+namespace Jupi007\PrestashopWebserviceExtra;
 
-use Jupi007\PrestashopWebserviceBundle\Services\PrestashopWebservice;
+use Jupi007\PrestashopWebserviceExtra\PrestashopWebservice;
 
 class PrestashopWebserviceExtra
 {
     protected PrestashopWebservice $webservice;
 
     protected ?string $queryAction = null;
-    public ?array $queryOptions = null;
+    protected ?array $queryOptions = null;
 
     public function __construct(PrestashopWebservice $webservice)
     {
@@ -148,7 +148,7 @@ class PrestashopWebserviceExtra
         return $this;
     }
 
-    public function getBlankSchema(string $resource): self // REDO THIS !!!
+    public function getBlankSchema(string $resource): self
     {
         $this->queryAction = 'get';
         $this->queryOptions['url'] = $this->webservice->getUrl() . '/api/' . $resource . '?schema=blank';

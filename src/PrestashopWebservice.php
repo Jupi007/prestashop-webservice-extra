@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Jupi007\PrestashopWebserviceExtra\Services;
+namespace Jupi007\PrestashopWebserviceExtra;
 
 use PrestaShopWebservice as PrestaShopWebserviceLib;
 
