@@ -36,10 +36,3 @@ Usage
 
 **TODO**
 
-Features
-========
-
-- [x] Get
-- [ ] Post
-- [ ] Put
-- [ ] Delete
