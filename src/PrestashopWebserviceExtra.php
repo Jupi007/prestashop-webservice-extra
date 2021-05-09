@@ -42,15 +42,25 @@ class PrestashopWebserviceExtra
         $this->addOption('resource', $resource);
     }
 
-    public function initQuery(): self
+    protected function checkAllowedActions(array $allowedActions): void
+    {
+        if ($this->queryAction === null) {
+            throw new PrestaShopWebserviceException('You\'re trying to add a query option before defining the query action. The query action must always be defined before any query option.');
+        }
+
+        if (!in_array($this->queryAction, $allowedActions)) {
+            throw new PrestaShopWebserviceException('This query option can only be used with these actions: ' . implode(", ", $allowedActions) . '. Current one (' . $this->queryAction . ') is forbidden.');
+        }
+    }
+
+    protected function initQuery(): void
     {
         $this->queryOptions = [];
-        
-        return $this;
     }
 
     public function get(string $resource): self
     {
+        $this->initQuery();
         $this->setAction('get');
         $this->setResource($resource);
 
@@ -59,6 +69,7 @@ class PrestashopWebserviceExtra
 
     public function getBlankSchema(string $resource): self
     {
+        $this->initQuery();
         $this->setAction('get');
         $this->addOption(
             'url',
@@ -70,6 +81,7 @@ class PrestashopWebserviceExtra
 
     public function add(string $resource): self
     {
+        $this->initQuery();
         $this->setAction('add');
         $this->setResource($resource);
 
@@ -78,6 +90,7 @@ class PrestashopWebserviceExtra
 
     public function edit(string $resource): self
     {
+        $this->initQuery();
         $this->setAction('edit');
         $this->setResource($resource);
 
@@ -86,6 +99,7 @@ class PrestashopWebserviceExtra
 
     public function delete(string $resource): self
     {
+        $this->initQuery();
         $this->setAction('delete');
         $this->setResource($resource);
 
@@ -94,6 +108,7 @@ class PrestashopWebserviceExtra
     
     public function id(int $id): self
     {
+        $this->checkAllowedActions(['get', 'edit', 'delete']);
         $this->addOption('id', $id);
 
         return $this;
@@ -101,6 +116,7 @@ class PrestashopWebserviceExtra
 
     public function addValueFilter(string $field, string $value): self
     {
+        $this->checkAllowedActions(['get']);
         $this->addOption(
             'filter[' . $field . ']',
             '[' . $value . ']'
@@ -111,6 +127,8 @@ class PrestashopWebserviceExtra
 
     public function addValuesFilter(string $field, array $values): self
     {
+        $this->checkAllowedActions(['get']);
+
         if (count($values) === 0) return $this;
 
         $this->addOption(
@@ -123,6 +141,8 @@ class PrestashopWebserviceExtra
 
     public function addIntervalFilter(string $field, int $min, int $max): self
     {
+        $this->checkAllowedActions(['get']);
+
         $this->addOption(
             'filter[' . $field . ']',
             '[' . $min . ',' . $max . ']'
@@ -133,6 +153,8 @@ class PrestashopWebserviceExtra
 
     public function addBeginsByFilter(string $field, string $value): self
     {
+        $this->checkAllowedActions(['get']);
+
         $this->addOption(
             'filter[' . $field . ']',
             '[' . $value . ']%'
@@ -143,6 +165,8 @@ class PrestashopWebserviceExtra
 
     public function addEndsByFilter(string $field, string $value): self
     {
+        $this->checkAllowedActions(['get']);
+
         $this->addOption(
             'filter[' . $field . ']',
             '%[' . $value . ']'
@@ -153,6 +177,8 @@ class PrestashopWebserviceExtra
 
     public function addContainsFilter(string $field, string $value): self
     {
+        $this->checkAllowedActions(['get']);
+        
         $this->addOption(
             'filter[' . $field . ']',
             '%[' . $value . ']%'
@@ -163,6 +189,8 @@ class PrestashopWebserviceExtra
 
     public function display(array $display): self
     {
+        $this->checkAllowedActions(['get']);
+        
         if (count($display) === 0) return $this;
         
         $this->addOption(
@@ -175,6 +203,8 @@ class PrestashopWebserviceExtra
 
     public function displayFull(): self
     {
+        $this->checkAllowedActions(['get']);
+        
         $this->addOption(
             'display',
             'full'
@@ -185,6 +215,8 @@ class PrestashopWebserviceExtra
 
     public function sort(array $sortArray): self
     {
+        $this->checkAllowedActions(['get']);
+        
         if (count($sortArray) === 0) return $this;
 
         $sort = [];
@@ -203,6 +235,8 @@ class PrestashopWebserviceExtra
 
     public function limit(int $limit, int $offset = 0): self
     {
+        $this->checkAllowedActions(['get']);
+        
         $this->addOption(
             'limit',
             $offset > 0 ? $offset . ',' . $limit : $limit
@@ -233,6 +267,8 @@ class PrestashopWebserviceExtra
 
     public function schema(string $schema): self
     {
+        $this->checkAllowedActions(['get']);
+        
         $this->addOption(
             'schema',
             $schema
@@ -243,6 +279,8 @@ class PrestashopWebserviceExtra
 
     public function language(string $language): self
     {
+        $this->checkAllowedActions(['get']);
+        
         $this->addOption(
             'language',
             $language
@@ -253,6 +291,8 @@ class PrestashopWebserviceExtra
 
     public function sendXml($xml): self
     {
+        $this->checkAllowedActions(['add', 'edit']);
+        
         $this->addOption(
             $this->queryAction === 'add' ? 'postXml' : 'putXml',
             $xml
