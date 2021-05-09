@@ -40,37 +40,44 @@ class PrestashopWebserviceExtra
         return $this;
     }
 
-    public function addValueFilter(string $filter, string $value): self
+    public function addValueFilter(string $field, string $value): self
     {
-        $this->queryOptions['filter[' . $filter . ']'] = '[' . $value . ']';
+        $this->queryOptions['filter[' . $field . ']'] = '[' . $value . ']';
 
         return $this;
     }
 
-    public function addValuesFilter(string $filter, array $values): self
+    public function addValuesFilter(string $field, array $values): self
     {
-        $this->queryOptions['filter[' . $filter . ']'] = '[' . implode("|", $values) . ']';
+        $this->queryOptions['filter[' . $field . ']'] = '[' . implode("|", $values) . ']';
 
         return $this;
     }
 
-    public function addContainValueFilter(string $filter, string $value): self
+    public function addIntervalFilter(string $field, int $min, int $max): self
     {
-        $this->queryOptions['filter[' . $filter . ']'] = '%[' . $value . ']%';
+        $this->queryOptions['filter[' . $field . ']'] = '[' . $min . ',' . $max;
 
         return $this;
     }
 
-    public function addStartByValueFilter(string $filter, string $value): self
+    public function addBeginsByFilter(string $field, string $value): self
     {
-        $this->queryOptions['filter[' . $filter . ']'] = '[' . $value . ']%';
+        $this->queryOptions['filter[' . $field . ']'] = '[' . $value . ']%';
 
         return $this;
     }
 
-    public function addMinMaxValuesFilter(string $filter, int $min, int $max): self
+    public function addEndsByFilter(string $field, string $value): self
     {
-        $this->queryOptions['filter[' . $filter . ']'] = '[' . $min . ',' . $max;
+        $this->queryOptions['filter[' . $field . ']'] = '%[' . $value . ']';
+
+        return $this;
+    }
+
+    public function addContainsFilter(string $field, string $value): self
+    {
+        $this->queryOptions['filter[' . $field . ']'] = '%[' . $value . ']%';
 
         return $this;
     }
@@ -106,16 +113,9 @@ class PrestashopWebserviceExtra
         return $this;
     }
 
-    public function sortFull(): self
-    {
-        $this->queryOptions['sort'] = 'full';
-
-        return $this;
-    }
-
     public function limit(int $limit, int $offset = 0): self
     {
-        $this->queryOptions['limit'] = $offset > 0 ? $offset.','.$limit : $limit;
+        $this->queryOptions['limit'] = $offset > 0 ? $offset . ',' . $limit : $limit;
 
         return $this;
     }
