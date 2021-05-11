@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Jupi007\PrestashopWebserviceExtra;
 
 use Jupi007\PrestashopWebserviceExtra\PrestashopWebservice;
-use PrestaShopWebserviceException;
+use Jupi007\PrestashopWebserviceExtra\PrestaShopWebserviceException;
 
 class PrestashopWebserviceExtra
 {
@@ -129,7 +129,7 @@ class PrestashopWebserviceExtra
     {
         $this->checkAllowedActions(['get']);
 
-        if (count($values) === 0) return $this;
+        if (count($values) === 0) throw new PrestaShopWebserviceException('Values array shouldn\'t be empty.');
 
         $this->addOption(
             'filter[' . $field . ']',
@@ -191,7 +191,7 @@ class PrestashopWebserviceExtra
     {
         $this->checkAllowedActions(['get']);
         
-        if (count($display) === 0) return $this;
+        if (count($display) === 0) throw new PrestaShopWebserviceException('Display values array shouldn\'t be empty.');
         
         $this->addOption(
             'display',
@@ -217,11 +217,13 @@ class PrestashopWebserviceExtra
     {
         $this->checkAllowedActions(['get']);
         
-        if (count($sortArray) === 0) return $this;
+        if (count($sortArray) === 0) throw new PrestaShopWebserviceException('Sort values array shouldn\'t be empty.');
 
         $sort = [];
+        $allowedOrders = ['ASC', 'DESC'];
 
         foreach ($sortArray as $field => $order) {
+            if (!in_array($order, $allowedOrders)) throw new PrestaShopWebserviceException('Please provide a valide order value (ASC or DESC).');
             $sort[] = $field . '_' . $order;
         }
 
@@ -245,7 +247,7 @@ class PrestashopWebserviceExtra
         return $this;
     }
 
-    public function idShop(string $idShop): self
+    public function idShop(int $idShop): self
     {
         $this->addOption(
             'id_shop',
@@ -255,7 +257,7 @@ class PrestashopWebserviceExtra
         return $this;
     }
 
-    public function idGroupShop(string $idGroupShop): self
+    public function idGroupShop(int $idGroupShop): self
     {
         $this->addOption(
             'id_group_shop',
@@ -277,7 +279,8 @@ class PrestashopWebserviceExtra
         return $this;
     }
 
-    public function language(string $language): self
+    // Webservice Lib doesn't support language option
+    /*public function language(string $language): self
     {
         $this->checkAllowedActions(['get']);
         
@@ -287,7 +290,7 @@ class PrestashopWebserviceExtra
         );
 
         return $this;
-    }
+    }*/
 
     public function sendXml($xml): self
     {
@@ -315,5 +318,15 @@ class PrestashopWebserviceExtra
         $this->queryOptions = null;
 
         return $data;
+    }
+
+    public function getQueryAction(): string
+    {
+        return $this->queryAction;
+    }
+
+    public function getQueryOptions(): array
+    {
+        return $this->queryOptions;
     }
 }

@@ -12,9 +12,17 @@
     "require": {
     	"prestashop/prestashop-webservice-lib": "dev-master"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
     "autoload": {
         "psr-4": {
             "Jupi007\\PrestashopWebserviceExtra\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jupi007\\PrestashopWebserviceExtra\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "dev",
