@@ -1,5 +1,6 @@
-PrestaShop Webservice lib Extra
-===============================
+<p align="center">Using Symfony? A bundle is available <a href="https://github.com/Jupi007/prestashop-webservice-bundle">here</a>.</p>
+
+<h1 align="center">PrestaShop Webservice lib Extra</h1>
 
 PrestaShop Webservice lib Extra is a fully object-oriented way to interact with a Prestashop webservice. It is build on top of the official Prestashop Webservice lib and include 100% functionality of the latter.
 
