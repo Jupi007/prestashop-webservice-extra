@@ -33,7 +33,16 @@ class PrestashopWebserviceExtraTest extends TestCase
         $this->assertEquals($webservice->getQueryAction(), 'get');
     }
 
-    public function testSetBlankSchemaAction()
+    public function testGetUrlAction()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice->getUrl('http://shop.com/api/products');
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), ['url' => 'http://shop.com/api/products']);
+    }
+
+    public function testGetBlankSchemaAction()
     {
         $webservice = $this->getWebserviceInstance();
         $webservice->getBlankSchema('products');
@@ -50,6 +59,15 @@ class PrestashopWebserviceExtraTest extends TestCase
         $this->assertEquals($webservice->getQueryAction(), 'add');
     }
 
+    public function testAddUrlAction()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice->addUrl('http://shop.com/api/products');
+
+        $this->assertEquals($webservice->getQueryAction(), 'add');
+        $this->assertEquals($webservice->getQueryOptions(), ['url' => 'http://shop.com/api/products']);
+    }
+
     public function testEditAction()
     {
         $webservice = $this->getWebserviceInstance();
@@ -58,12 +76,30 @@ class PrestashopWebserviceExtraTest extends TestCase
         $this->assertEquals($webservice->getQueryAction(), 'edit');
     }
 
+    public function testEditUrlAction()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice->editUrl('http://shop.com/api/products/2');
+
+        $this->assertEquals($webservice->getQueryAction(), 'edit');
+        $this->assertEquals($webservice->getQueryOptions(), ['url' => 'http://shop.com/api/products/2']);
+    }
+
     public function testDeleteAction()
     {
         $webservice = $this->getWebserviceInstance();
         $webservice->delete('products');
 
         $this->assertEquals($webservice->getQueryAction(), 'delete');
+    }
+
+    public function testDeleteUrlAction()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice->deleteUrl('http://shop.com/api/products/2');
+
+        $this->assertEquals($webservice->getQueryAction(), 'delete');
+        $this->assertEquals($webservice->getQueryOptions(), ['url' => 'http://shop.com/api/products/2']);
     }
 
     public function testSetAction()

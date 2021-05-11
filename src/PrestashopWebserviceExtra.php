@@ -42,6 +42,11 @@ class PrestashopWebserviceExtra
         $this->addOption('resource', $resource);
     }
 
+    protected function setUrl(string $url): void
+    {
+        $this->addOption('url', $url);
+    }
+
     protected function checkAllowedActions(array $allowedActions): void
     {
         if ($this->queryAction === null) {
@@ -67,6 +72,15 @@ class PrestashopWebserviceExtra
         return $this;
     }
 
+    public function getUrl(string $url): self
+    {
+        $this->initQuery();
+        $this->setAction('get');
+        $this->setUrl($url);
+
+        return $this;
+    }
+
     public function getBlankSchema(string $resource): self
     {
         $this->initQuery();
@@ -88,6 +102,15 @@ class PrestashopWebserviceExtra
         return $this;
     }
 
+    public function addUrl(string $url): self
+    {
+        $this->initQuery();
+        $this->setAction('add');
+        $this->setUrl($url);
+
+        return $this;
+    }
+
     public function edit(string $resource): self
     {
         $this->initQuery();
@@ -97,11 +120,29 @@ class PrestashopWebserviceExtra
         return $this;
     }
 
+    public function editUrl(string $url): self
+    {
+        $this->initQuery();
+        $this->setAction('edit');
+        $this->setUrl($url);
+
+        return $this;
+    }
+
     public function delete(string $resource): self
     {
         $this->initQuery();
         $this->setAction('delete');
         $this->setResource($resource);
+
+        return $this;
+    }
+
+    public function deleteUrl(string $url): self
+    {
+        $this->initQuery();
+        $this->setAction('delete');
+        $this->setUrl($url);
 
         return $this;
     }
