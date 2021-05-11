@@ -379,19 +379,57 @@ class PrestashopWebserviceExtraTest extends TestCase
         ]);
     }
 
-    /*public function testLanguageOption()
+    public function testLanguageFilterOption()
     {
         $webservice = $this->getWebserviceInstance();
         $webservice
             ->get('products')
-            ->language('Fr');
+            ->languageFilter(2);
 
         $this->assertEquals($webservice->getQueryAction(), 'get');
         $this->assertEquals($webservice->getQueryOptions(), [
             'resource' => 'products',
-            'language' => 'Fr'
+            'language' => '2'
         ]);
-    }*/
+    }
+
+    public function testLanguagesFilterOption()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->get('products')
+            ->languagesFilter([2, 3]);
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), [
+            'resource' => 'products',
+            'language' => '[2|3]'
+        ]);
+    }
+
+    public function testLanguagesFilterOptionWithEmptyArray()
+    {
+        $this->expectException(PrestaShopWebserviceException::class);
+
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->get('products')
+            ->languagesFilter([]);
+    }
+
+    public function testLanguageIntervalFilterOption()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->get('products')
+            ->languageIntervalFilter(1, 5);
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), [
+            'resource' => 'products',
+            'language' => '[1,5]'
+        ]);
+    }
 
     public function testSendXmlOptionWithAddAction()
     {

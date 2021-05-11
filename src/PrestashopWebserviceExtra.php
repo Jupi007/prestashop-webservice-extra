@@ -320,18 +320,42 @@ class PrestashopWebserviceExtra
         return $this;
     }
 
-    // Webservice Lib doesn't support language option
-    /*public function language(string $language): self
+    public function languageFilter(int $languageId): self
     {
         $this->checkAllowedActions(['get']);
-        
         $this->addOption(
             'language',
-            $language
+            $languageId
         );
 
         return $this;
-    }*/
+    }
+
+    public function languagesFilter(array $languagesIds): self
+    {
+        $this->checkAllowedActions(['get']);
+
+        if (count($languagesIds) === 0) throw new PrestaShopWebserviceException('Languages ids array shouldn\'t be empty.');
+
+        $this->addOption(
+            'language',
+            '[' . implode("|", $languagesIds) . ']'
+        );
+
+        return $this;
+    }
+
+    public function languageIntervalFilter(int $minLanguageId, int $maxLanguageId): self
+    {
+        $this->checkAllowedActions(['get']);
+
+        $this->addOption(
+            'language',
+            '[' . $minLanguageId . ',' . $maxLanguageId . ']'
+        );
+
+        return $this;
+    }
 
     public function sendXml($xml): self
     {
