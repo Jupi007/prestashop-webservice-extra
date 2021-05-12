@@ -9,23 +9,18 @@
             "email": "paul.kepinski@orange.fr"
         }
     ],
-    "require": {
-    	"prestashop/prestashop-webservice-lib": "dev-master"
-    },
+    "require": {},
     "require-dev": {
         "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
-            "Jupi007\\PrestashopWebserviceExtra\\": "src/",
-            "Jupi007\\PrestashopWebserviceExtra\\Libraries\\": "lib/"
+            "Jupi007\\PrestaShopWebserviceExtra\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Jupi007\\PrestashopWebserviceExtra\\Tests\\": "tests/"
+            "Jupi007\\PrestaShopWebserviceExtra\\Tests\\": "tests/"
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }

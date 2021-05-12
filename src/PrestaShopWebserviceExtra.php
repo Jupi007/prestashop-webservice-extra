@@ -2,21 +2,24 @@
 
 declare(strict_types=1);
 
-namespace Jupi007\PrestashopWebserviceExtra;
+namespace Jupi007\PrestaShopWebserviceExtra;
 
-use Jupi007\PrestashopWebserviceExtra\PrestashopWebservice;
-use Jupi007\PrestashopWebserviceExtra\PrestaShopWebserviceException;
+use Jupi007\PrestaShopWebserviceExtra\Libraries\PrestaShopWebservice;
+use Jupi007\PrestaShopWebserviceExtra\Libraries\PrestaShopWebserviceException;
 
-class PrestashopWebserviceExtra
+class PrestaShopWebserviceExtra
 {
-    protected PrestashopWebservice $webservice;
+    protected string $url;
+
+    protected PrestaShopWebservice $webservice;
 
     protected ?string $queryAction = null;
     protected ?array $queryOptions = null;
 
-    public function __construct(PrestashopWebservice $webservice)
+    public function __construct(string $url, string $key, bool $debug = false)
     {
-        $this->webservice = $webservice;
+        $this->url = $url;
+        $this->webservice = new PrestaShopWebservice($url, $key, $debug);
     }
 
     protected function setAction(string $action): void
@@ -87,7 +90,7 @@ class PrestashopWebserviceExtra
         $this->setAction('get');
         $this->addOption(
             'url',
-            $this->webservice->getUrl() . '/api/' . $resource . '?schema=blank'
+            $this->url . '/api/' . $resource . '?schema=blank'
         );
 
         return $this;
