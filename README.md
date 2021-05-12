@@ -4,21 +4,6 @@
 
 PrestaShop Webservice lib Extra is a fully object-oriented way to interact with a Prestashop webservice. It is build on top of the official Prestashop Webservice lib and include 100% functionality of the latter.
 
-Prerequisites
-=============
-
-This library require the [PrestaShop Webservice lib](https://github.com/PrestaShop/PrestaShop-webservice-lib) package which is only available in dev version on packagist.
-
-Before installing this library, you must add these lines into the `composer.json` file of your project:
-
-```js
-{
-    // ...
-    "minimum-stability": "dev",
-    "prefer-stable": true
-}
-```
-
 Installation
 ============
 
