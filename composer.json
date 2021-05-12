@@ -17,7 +17,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Jupi007\\PrestashopWebserviceExtra\\": "src/"
+            "Jupi007\\PrestashopWebserviceExtra\\": "src/",
+            "Jupi007\\PrestashopWebserviceExtra\\Libraries\\": "lib/"
         }
     },
     "autoload-dev": {
