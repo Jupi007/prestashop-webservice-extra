@@ -285,6 +285,23 @@ class PrestaShopWebserviceExtraTest extends TestCase
         ]);
     }
 
+    public function testSortOptionWithDate()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->get('products')
+            ->sort([
+                'date_add' => 'ASC'
+            ]);
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), [
+            'resource' => 'products',
+            'sort' => '[date_add_ASC]',
+            'date' => 1
+        ]);
+    }
+
     public function testSortOptionWithEmptyArray()
     {
         $this->expectException(PrestaShopWebserviceException::class);

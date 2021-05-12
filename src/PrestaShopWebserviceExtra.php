@@ -265,10 +265,19 @@ class PrestaShopWebserviceExtra
 
         $sort = [];
         $allowedOrders = ['ASC', 'DESC'];
+        $dateFields = ['date_add', 'date_upd'];
+        $allowDateSorting = false;
 
         foreach ($sortArray as $field => $order) {
             if (!in_array($order, $allowedOrders)) throw new PrestaShopWebserviceException('Please provide a valide order value (ASC or DESC).');
+
+            if (in_array($field, $dateFields)) $allowDateSorting = true;
+
             $sort[] = $field . '_' . $order;
+        }
+
+        if ($allowDateSorting) {
+            $this->addOption('date', 1);
         }
 
         $this->addOption(
