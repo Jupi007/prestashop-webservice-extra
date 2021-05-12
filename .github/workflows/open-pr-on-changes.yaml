@@ -1,0 +1,58 @@
+name: Update PR on upstream changes
+on:
+  push:
+    paths:
+      - '.github/workflows/open-pr-on-changes.yaml'
+  schedule:
+    - cron: '8 0 * * *'
+
+jobs:
+  refresh-upstream:
+    name: Check for upstream changes
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        buildenv: [
+          {
+            project: PrestaShop webservice lib,
+            repo: "https://github.com/PrestaShop/PrestaShop-webservice-lib.git",
+            upstreambranch: master,
+            localbranch: webservice-lib,
+            projectdir: PrestaShop-webservice-lib,
+            src: PSWebServiceLibrary.php,
+            dest: upstream/PSWebServiceLibrary.php
+          },
+      ]
+    steps:
+      # Checkout code
+      - uses: actions/checkout@v2
+      - name: Download from ${{ matrix.buildenv.repo }}, on branch ${{ matrix.buildenv.upstreambranch }}
+        id: checknewupstream
+        run: |
+          hasModif="false"
+          pushd /tmp
+          git clone --branch ${UPSTEAM_BRANCH} --depth 1 ${UPSTREAM_REPO_URL}
+          popd
+          rm -rf ${DEST}
+          cp -a /tmp/${PROJECT_DIR}/${SRC} ${DEST}
+          MODIFIED=$(git status --porcelain)
+          if [ -n "$MODIFIED" ]; then
+            hasModif="true"
+          fi
+          echo "::set-output name=modified::${hasModif}"
+        env:
+          UPSTREAM_REPO_URL: ${{ matrix.buildenv.repo }}
+          UPSTEAM_BRANCH: ${{ matrix.buildenv.upstreambranch }}
+          SRC: ${{ matrix.buildenv.src }}
+          DEST: ${{ matrix.buildenv.dest }}
+          PROJECT_DIR: ${{ matrix.buildenv.projectdir }}
+      - name: Create or update Pull Request
+        if: steps.checknewupstream.outputs.modified == 'true'
+        uses: peter-evans/create-pull-request@v3.7.0
+        with:
+          commit-message: New upstream snapshot for ${{ matrix.buildenv.project }}
+          title: Auto update new upstream snapshot for ${{ matrix.buildenv.project }}
+          labels: automated pr, new upstream
+          body: "[New upstream ${{ matrix.buildenv.project }} changes](https://github.com/ubuntu/yaru/actions?query=workflow%3A%22Update+PR+on+upstream+changes+once+landed+on+ubuntu%22) by GitHub Action"
+          branch: upstream-${{ matrix.buildenv.localbranch }}-update
+          token: ${{ secrets.GITHUB_TOKEN }}

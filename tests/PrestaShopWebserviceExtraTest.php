@@ -1,11 +1,10 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Jupi007\PrestashopWebserviceExtra\PrestashopWebserviceExtra;
-use Jupi007\PrestashopWebserviceExtra\PrestaShopWebservice;
-use Jupi007\PrestashopWebserviceExtra\PrestaShopWebserviceException;
+use Jupi007\PrestaShopWebserviceExtra\PrestaShopWebserviceExtra;
+use Jupi007\PrestaShopWebserviceExtra\Libraries\PrestaShopWebserviceException;
 
-class PrestashopWebserviceExtraTest extends TestCase
+class PrestaShopWebserviceExtraTest extends TestCase
 {
     public function testCheckAllowedActionsWithNull()
     {
@@ -461,17 +460,8 @@ class PrestashopWebserviceExtraTest extends TestCase
         ]);
     }
 
-    private function getWebserviceInstance(): PrestashopWebserviceExtra
+    private function getWebserviceInstance(): PrestaShopWebserviceExtra
     {
-        $webserviceLib = $this
-            ->getMockBuilder(PrestaShopWebservice::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getUrl'])
-            ->getMock();
-        
-        $webserviceLib->method('getUrl')->willReturn('https://shop.com');
-
-        /** @var PrestashopWebservice $webserviceLib */
-        return new PrestashopWebserviceExtra($webserviceLib);
+        return new PrestaShopWebserviceExtra('https://shop.com', 'APIKEY123456789', false);
     }
 }
