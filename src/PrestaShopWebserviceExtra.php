@@ -7,6 +7,9 @@ namespace Jupi007\PrestaShopWebserviceExtra;
 use Jupi007\PrestaShopWebserviceExtra\Libraries\PrestaShopWebservice;
 use Jupi007\PrestaShopWebserviceExtra\Libraries\PrestaShopWebserviceException;
 
+/**
+ * 
+*/
 class PrestaShopWebserviceExtra
 {
     protected string $url;
@@ -16,6 +19,15 @@ class PrestaShopWebserviceExtra
     protected ?string $queryAction = null;
     protected ?array $queryOptions = null;
 
+    /**
+     * Initialize the webservice class
+     *
+     * @param string $url Root URL for the shop
+     * @param string $key Authentication key
+     * @param mixed $debug Debug mode Activated (true) or deactivated (false)
+     *
+     * @throws PrestaShopWebserviceException if curl is not loaded
+     */
     public function __construct(string $url, string $key, bool $debug = false)
     {
         $this->url = $url;
@@ -66,6 +78,12 @@ class PrestaShopWebserviceExtra
         $this->queryOptions = [];
     }
 
+    /**
+     * Use the "get" action for the current request
+     *
+     * @param string $resource Name of the resource to get
+     * @return self
+     */
     public function get(string $resource): self
     {
         $this->initQuery();
@@ -75,6 +93,12 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Use the "get" action with an URL
+     *
+     * @param string $url URL of the resource to get
+     * @return self
+     */
     public function getUrl(string $url): self
     {
         $this->initQuery();
@@ -84,6 +108,12 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Get the blank shema of a resource
+     *
+     * @param string $resource Name of the resource blank shema to get
+     * @return self
+     */
     public function getBlankSchema(string $resource): self
     {
         $this->initQuery();
@@ -96,6 +126,12 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Use the "add" action for the current request
+     *
+     * @param string $resource Name of the resource to add
+     * @return self
+     */
     public function add(string $resource): self
     {
         $this->initQuery();
@@ -105,6 +141,12 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Use the "add" action with an URL
+     *
+     * @param string $url URL of the resource to add
+     * @return self
+     */
     public function addUrl(string $url): self
     {
         $this->initQuery();
@@ -114,6 +156,12 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Use the "edit" action for the current request
+     *
+     * @param string $resource Name of the resource to edit
+     * @return self
+     */
     public function edit(string $resource): self
     {
         $this->initQuery();
@@ -123,6 +171,12 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Use the "edit" action with an URL
+     *
+     * @param string $url URL of the resource to edit
+     * @return self
+     */
     public function editUrl(string $url): self
     {
         $this->initQuery();
@@ -132,6 +186,12 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Use the "delete" action for the current request
+     *
+     * @param string $resource Name of the resource to delete
+     * @return self
+     */
     public function delete(string $resource): self
     {
         $this->initQuery();
@@ -141,6 +201,12 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Use the "delete" action with an URL
+     *
+     * @param string $url URL of the resource to delete
+     * @return self
+     */
     public function deleteUrl(string $url): self
     {
         $this->initQuery();
@@ -150,6 +216,13 @@ class PrestaShopWebserviceExtra
         return $this;
     }
     
+    /**
+     * Add the "id" option to the query to target a specific resource
+     * Only usable with "get", "edit" and "delete" actions
+     *
+     * @param integer $id ID of the resource to target
+     * @return self
+     */
     public function id(int $id): self
     {
         $this->checkAllowedActions(['get', 'edit', 'delete']);
@@ -158,6 +231,14 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Add a new field filter with a single value
+     * Only usable with "get" action
+     * 
+     * @param string $field Field to filter
+     * @param string $value Value to include
+     * @return self
+     */
     public function addValueFilter(string $field, string $value): self
     {
         $this->checkAllowedActions(['get']);
@@ -169,6 +250,14 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Add a new field filter with multiple values
+     * Only usable with "get" action
+     *
+     * @param string $field Field to filter
+     * @param array $values Values to include
+     * @return self
+     */
     public function addValuesFilter(string $field, array $values): self
     {
         $this->checkAllowedActions(['get']);
@@ -183,6 +272,15 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Add a new field filter based on an interval of values
+     * Only usable with "get" action
+     *
+     * @param string $field Field to filter
+     * @param integer $min Min value to include
+     * @param integer $max Max value to include
+     * @return self
+     */
     public function addIntervalFilter(string $field, int $min, int $max): self
     {
         $this->checkAllowedActions(['get']);
@@ -195,6 +293,14 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Add a new field filter who target all values starting with a certain value
+     * Only usable with "get" action
+     *
+     * @param string $field Field to filter
+     * @param string $value Beginning of values to include
+     * @return self
+     */
     public function addBeginsByFilter(string $field, string $value): self
     {
         $this->checkAllowedActions(['get']);
@@ -207,6 +313,14 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Add a new field filter who target all values ending with a certain value
+     * Only usable with "get" action
+     *
+     * @param string $field Field to filter
+     * @param string $value Endding of values to include
+     * @return self
+     */
     public function addEndsByFilter(string $field, string $value): self
     {
         $this->checkAllowedActions(['get']);
@@ -219,6 +333,14 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Add a new field filter who target all values which contain a certain value
+     * Only usable with "get" action
+     *
+     * @param string $field Field to filter
+     * @param string $value Containing value to include
+     * @return self
+     */
     public function addContainsFilter(string $field, string $value): self
     {
         $this->checkAllowedActions(['get']);
@@ -231,6 +353,13 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Display only given fields
+     * Only usable with "get" action
+     *
+     * @param array $display Fields to display
+     * @return self
+     */
     public function display(array $display): self
     {
         $this->checkAllowedActions(['get']);
@@ -245,6 +374,12 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Display all fields
+     * Only usable with "get" action
+     *
+     * @return self
+     */
     public function displayFull(): self
     {
         $this->checkAllowedActions(['get']);
@@ -257,6 +392,17 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Sort query results by fields
+     * Only usable with "get" action
+     * 
+     * The sort array must have this shape:
+     * ['field' => 'sort direction']
+     * Possible values for the sort direction are 'ASC' and 'DESC' only
+     *
+     * @param array $sortArray Associative array of fields to sort
+     * @return self
+     */
     public function sort(array $sortArray): self
     {
         $this->checkAllowedActions(['get']);
@@ -288,6 +434,14 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Limit the number of results, you can also define an offset
+     * Only usable with "get" action
+     *
+     * @param integer $limit Number of results to include
+     * @param integer $offset Offset of the first result (default is no offset)
+     * @return self
+     */
     public function limit(int $limit, int $offset = 0): self
     {
         $this->checkAllowedActions(['get']);
@@ -300,6 +454,12 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Define the shop to be used as a context for the current query
+     *
+     * @param integer $idShop ID of the shop to be used
+     * @return self
+     */
     public function idShop(int $idShop): self
     {
         $this->addOption(
@@ -310,6 +470,12 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Define the group shop to be used as a context for the current query
+     *
+     * @param integer $idGroupShop ID of the shop group to be used
+     * @return self
+     */
     public function idGroupShop(int $idGroupShop): self
     {
         $this->addOption(
@@ -320,6 +486,13 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Select the kind of resource's shema you want to retrieve 
+     * Only usable with "get" action
+     *
+     * @param string $schema kind of shema
+     * @return self
+     */
     public function schema(string $schema): self
     {
         $this->checkAllowedActions(['get']);
@@ -332,6 +505,13 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Only display localized fields in one language
+     * Only usable with "get" action
+     *
+     * @param integer $languageId Language ID
+     * @return self
+     */
     public function languageFilter(int $languageId): self
     {
         $this->checkAllowedActions(['get']);
@@ -343,6 +523,13 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Display localized fields for specified list of languages
+     * Only usable with "get" action
+     *
+     * @param array $languagesIds Array of languages IDs
+     * @return self
+     */
     public function languagesFilter(array $languagesIds): self
     {
         $this->checkAllowedActions(['get']);
@@ -357,6 +544,14 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
+    /**
+     * Display localized fields for an interval of languages
+     * Only usable with "get" action
+     *
+     * @param integer $minLanguageId Languages min ID
+     * @param integer $maxLanguageId Languages max ID
+     * @return self
+     */
     public function languageIntervalFilter(int $minLanguageId, int $maxLanguageId): self
     {
         $this->checkAllowedActions(['get']);
@@ -369,7 +564,14 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
-    public function sendXml($xml): self
+    /**
+     * Fill the query with XML data
+     * Only usable with "add" and "edit" actions
+     *
+     * @param SimpleXMLElement $xml XML data you want to send
+     * @return self
+     */
+    public function sendXml(\SimpleXMLElement $xml): self
     {
         $this->checkAllowedActions(['add', 'edit']);
         
@@ -381,7 +583,12 @@ class PrestaShopWebserviceExtra
         return $this;
     }
 
-    public function executeQuery()
+    /**
+     * Execute the previously built query and return XML data
+     *
+     * @return SimpleXMLElement
+     */
+    public function executeQuery(): \SimpleXMLElement
     {
         $action = $this->queryAction;
 
@@ -397,11 +604,21 @@ class PrestaShopWebserviceExtra
         return $data;
     }
 
+    /**
+     * Getter for the queryAction property
+     *
+     * @return string
+     */
     public function getQueryAction(): string
     {
         return $this->queryAction;
     }
 
+    /**
+     * Getter for the queryOptions property
+     *
+     * @return array
+     */
     public function getQueryOptions(): array
     {
         return $this->queryOptions;
