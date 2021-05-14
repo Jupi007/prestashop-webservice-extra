@@ -28,7 +28,7 @@ class PrestaShopWebserviceExtra
      *
      * @throws PrestaShopWebserviceException if curl is not loaded
      */
-    public function __construct(string $url, string $key, bool $debug = false): void
+    public function __construct(string $url, string $key, bool $debug = false)
     {
         $this->url = $url;
         $this->webservice = new PrestaShopWebservice($url, $key, $debug);
