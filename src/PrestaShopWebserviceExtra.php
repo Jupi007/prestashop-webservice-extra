@@ -127,6 +127,24 @@ class PrestaShopWebserviceExtra
     }
 
     /**
+     * Get the synopsis shema of a resource
+     *
+     * @param string $resource Name of the resource synopsis shema to get
+     * @return self
+     */
+    public function getSynopsisSchema(string $resource): self
+    {
+        $this->initQuery();
+        $this->setAction('get');
+        $this->addOption(
+            'url',
+            $this->url . '/api/' . $resource . '?schema=synopsis'
+        );
+
+        return $this;
+    }
+
+    /**
      * Use the "add" action for the current request
      *
      * @param string $resource Name of the resource to add
@@ -492,6 +510,8 @@ class PrestaShopWebserviceExtra
      *
      * @param string $schema kind of shema
      * @return self
+     * 
+     * @deprecated You should use `getSynopsisSchema()` or `getBlankSchema()` instead
      */
     public function schema(string $schema): self
     {
