@@ -50,6 +50,15 @@ class PrestaShopWebserviceExtraTest extends TestCase
         $this->assertEquals($webservice->getQueryOptions(), ['url' => 'https://shop.com/api/products?schema=blank']);
     }
 
+    public function testGetSynopsisSchemaAction()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice->getSynopsisSchema('products');
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), ['url' => 'https://shop.com/api/products?schema=synopsis']);
+    }
+
     public function testAddAction()
     {
         $webservice = $this->getWebserviceInstance();
@@ -452,12 +461,12 @@ class PrestaShopWebserviceExtraTest extends TestCase
         $webservice = $this->getWebserviceInstance();
         $webservice
             ->add('products')
-            ->sendXml('xml data');
+            ->sendXml(new \SimpleXMLElement('<settings/>'));
 
         $this->assertEquals($webservice->getQueryAction(), 'add');
         $this->assertEquals($webservice->getQueryOptions(), [
             'resource' => 'products',
-            'postXml' => 'xml data'
+            'postXml' => new \SimpleXMLElement('<settings/>')
         ]);
     }
 
@@ -467,13 +476,13 @@ class PrestaShopWebserviceExtraTest extends TestCase
         $webservice
             ->edit('products')
             ->id(3)
-            ->sendXml('xml data');
+            ->sendXml(new \SimpleXMLElement('<settings/>'));
 
         $this->assertEquals($webservice->getQueryAction(), 'edit');
         $this->assertEquals($webservice->getQueryOptions(), [
             'resource' => 'products',
             'id' => 3,
-            'putXml' => 'xml data'
+            'putXml' => new \SimpleXMLElement('<settings/>')
         ]);
     }
 
