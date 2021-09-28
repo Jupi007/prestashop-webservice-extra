@@ -1,8 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Jupi007\PrestaShopWebserviceExtra\PrestaShopWebserviceExtra;
-use Jupi007\PrestaShopWebserviceExtra\Libraries\PrestaShopWebserviceException;
+use Jupi\PrestaShopWebserviceExtra\PrestaShopWebserviceExtra;
+use Jupi\PrestaShopWebserviceExtra\Libraries\PrestaShopWebserviceException;
 
 class PrestaShopWebserviceExtraTest extends TestCase
 {

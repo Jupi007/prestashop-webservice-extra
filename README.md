@@ -14,7 +14,7 @@ of the Composer documentation.
 Open a command console, enter your project directory and execute:
 
 ```console
-$ composer require "jupi007/prestashop-webservice-lib-extra"
+$ composer require "jupi/prestashop-webservice-lib-extra"
 ```
 
 Usage

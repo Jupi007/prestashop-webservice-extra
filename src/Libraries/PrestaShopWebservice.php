@@ -26,9 +26,9 @@
 * @package PrestaShopWebservice
 */
 
-namespace Jupi007\PrestaShopWebserviceExtra\Libraries;
+namespace Jupi\PrestaShopWebserviceExtra\Libraries;
 
-use Jupi007\PrestaShopWebserviceExtra\Libraries\PrestaShopWebserviceException;
+use Jupi\PrestaShopWebserviceExtra\Libraries\PrestaShopWebserviceException;
 
 class PrestaShopWebservice
 {

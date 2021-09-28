@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Jupi007\PrestaShopWebserviceExtra;
+namespace Jupi\PrestaShopWebserviceExtra;
 
-use Jupi007\PrestaShopWebserviceExtra\Libraries\PrestaShopWebservice;
-use Jupi007\PrestaShopWebserviceExtra\Libraries\PrestaShopWebserviceException;
+use Jupi\PrestaShopWebserviceExtra\Libraries\PrestaShopWebservice;
+use Jupi\PrestaShopWebserviceExtra\Libraries\PrestaShopWebserviceException;
 
 /**
  * 
