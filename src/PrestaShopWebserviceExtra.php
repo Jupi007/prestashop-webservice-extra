@@ -17,6 +17,7 @@ class PrestaShopWebserviceExtra
     protected PrestaShopWebservice $webservice;
 
     protected ?string $queryAction = null;
+    protected ?string $queryResource = null;
     protected ?array $queryOptions = null;
 
     /**
@@ -54,6 +55,7 @@ class PrestaShopWebserviceExtra
 
     protected function setResource(string $resource): void
     {
+        $this->queryResource = $resource;
         $this->addOption('resource', $resource);
     }
 
@@ -70,6 +72,17 @@ class PrestaShopWebserviceExtra
 
         if (!in_array($this->queryAction, $allowedActions)) {
             throw new PrestaShopWebserviceException('This query option can only be used with these actions: ' . implode(", ", $allowedActions) . '. Current one (' . $this->queryAction . ') is forbidden.');
+        }
+    }
+
+    protected function checkAllowedResource(array $allowedResources): void
+    {
+        if ($this->queryResource === null) {
+            throw new PrestaShopWebserviceException('You\'re trying to add a query option before defining the query action. the query action must always be defined before any query option.');
+        }
+
+        if (!in_array($this->queryResource, $allowedResources)) {
+            throw new PrestaShopWebserviceException('This query option can only be used with these resources: ' . implode(", ", $allowedResources) . '. Current one (' . $this->queryResource . ') is forbidden.');
         }
     }
 
@@ -369,6 +382,231 @@ class PrestaShopWebserviceExtra
         );
 
         return $this;
+    }
+
+    /**
+     * Add a specific "country" price field to the current request
+     * 
+     * Only usable with "get" action.
+     * Only usable with "products" and "combinations" resources.
+     *
+     * @param string $field Field name in the response
+     * @param int $countryId Customer’s country (use the resource ID)
+     * @return self
+     */
+    public function addCountryPriceParameter(string $fieldName, int $countryId): self
+    {
+        $this->addPriceParameter($fieldName, 'country', $countryId);
+
+        return $this;
+    }
+
+    /**
+     * Add a specific "state" price field to the current request
+     * 
+     * Only usable with "get" action.
+     * Only usable with "products" and "combinations" resources.
+     *
+     * @param string $field Field name in the response
+     * @param int $stateId Customer’s state (use the resource ID)
+     * @return self
+     */
+    public function addStatePriceParameter(string $fieldName, int $stateId): self
+    {
+        $this->addPriceParameter($fieldName, 'state', $stateId);
+
+        return $this;
+    }
+
+    /**
+     * Add a specific "postcode" price field to the current request
+     * 
+     * Only usable with "get" action.
+     * Only usable with "products" and "combinations" resources.
+     *
+     * @param string $field Field name in the response
+     * @param int $postcode Customer’s zip/postal code
+     * @return self
+     */
+    public function addPostcodePriceParameter(string $fieldName, int $postcode): self
+    {
+        $this->addPriceParameter($fieldName, 'postcode', $postcode);
+
+        return $this;
+    }
+
+    /**
+     * Add a specific "currency" price field to the current request
+     * 
+     * Only usable with "get" action.
+     * Only usable with "products" and "combinations" resources.
+     *
+     * @param string $field Field name in the response
+     * @param int $currencyId Currency used for the price (use the resource ID)
+     * @return self
+     */
+    public function addCurrencyPriceParameter(string $fieldName, int $currencyId): self
+    {
+        $this->addPriceParameter($fieldName, 'currency', $currencyId);
+
+        return $this;
+    }
+
+    /**
+     * Add a specific "group" price field to the current request
+     * 
+     * Only usable with "get" action.
+     * Only usable with "products" and "combinations" resources.
+     *
+     * @param string $field Field name in the response
+     * @param int $groupId Customer’s user group (use the resource ID)
+     * @return self
+     */
+    public function addGroupPriceParameter(string $fieldName, int $groupId): self
+    {
+        $this->addPriceParameter($fieldName, 'group', $groupId);
+
+        return $this;
+    }
+
+    /**
+     * Add a specific "quantity" price field to the current request
+     * 
+     * Only usable with "get" action.
+     * Only usable with "products" and "combinations" resources.
+     *
+     * @param string $field Field name in the response
+     * @param int $quantity Quantity of products
+     * @return self
+     */
+    public function addQuantityPriceParameter(string $fieldName, int $quantity): self
+    {
+        $this->addPriceParameter($fieldName, 'quantity', $quantity);
+
+        return $this;
+    }
+
+    /**
+     * Add a specific "product attribute" price field to the current request
+     * 
+     * Only usable with "get" action.
+     * Only usable with "products" and "combinations" resources.
+     *
+     * @param string $field Field name in the response
+     * @param int $productAttributeId Product attribute (combination) ID
+     * @return self
+     */
+    public function addProductAttributePriceParameter(string $fieldName, int $productAttributeId): self
+    {
+        $this->addPriceParameter($fieldName, 'product_attribute', $productAttributeId);
+
+        return $this;
+    }
+
+    /**
+     * Add a specific "decimals" price field to the current request
+     * 
+     * Only usable with "get" action.
+     * Only usable with "products" and "combinations" resources.
+     *
+     * @param string $field Field name in the response
+     * @param int $decimals Number of decimals used for rounding (displayed result may still have more with pending zeros)
+     * @return self
+     */
+    public function addDecimalsPriceParameter(string $fieldName, int $decimals): self
+    {
+        $this->addPriceParameter($fieldName, 'decimals', $decimals);
+
+        return $this;
+    }
+
+    /**
+     * Add a specific "use tax" price field to the current request
+     * 
+     * Only usable with "get" action.
+     * Only usable with "products" and "combinations" resources.
+     *
+     * @param string $field Field name in the response
+     * @param bool $useTax Include taxes in the price
+     * @return self
+     */
+    public function addUseTaxPriceParameter(string $fieldName, bool $useTax): self
+    {
+        $this->addPriceParameter($fieldName, 'use_tax', $useTax);
+
+        return $this;
+    }
+
+    /**
+     * Add a specific "use reduction" price field to the current request
+     * 
+     * Only usable with "get" action.
+     * Only usable with "products" and "combinations" resources.
+     *
+     * @param string $field Field name in the response
+     * @param bool $useReduction Include reduction associated to the specific price
+     * @return self
+     */
+    public function addUseReductionPriceParameter(string $fieldName, bool $useReduction): self
+    {
+        $this->addPriceParameter($fieldName, 'use_reduction', $useReduction);
+
+        return $this;
+    }
+
+    /**
+     * Add a specific "only reduction" price field to the current request
+     * 
+     * Only usable with "get" action.
+     * Only usable with "products" and "combinations" resources.
+     *
+     * @param string $field Field name in the response
+     * @param bool $onlyReduction Only display the reduction associated to the specific price
+     * @return self
+     */
+    public function addOnlyReductionPriceParameter(string $fieldName, bool $onlyReduction): self
+    {
+        $this->addPriceParameter($fieldName, 'only_reduction', $onlyReduction);
+
+        return $this;
+    }
+
+    /**
+     * Add a specific "use ecotax" price field to the current request
+     * 
+     * Only usable with "get" action.
+     * Only usable with "products" and "combinations" resources.
+     *
+     * @param string $field Field name in the response
+     * @param bool $useEcotax Include eco tax in the price
+     * @return self
+     */
+    public function addUseEcotaxPriceParameter(string $fieldName, bool $useEcotax): self
+    {
+        $this->addPriceParameter($fieldName, 'use_ecotax', $useEcotax);
+
+        return $this;
+    }
+
+    /**
+     * Add a specific price field to the current request
+     * 
+     * Only usable with "get" action.
+     * Only usable with "products" and "combinations" resources.
+     *
+     * @param string $fieldName Field name in the response
+     * @param string $parameter Parameter
+     * @param mixed $value Parameter value
+     */
+    protected function addPriceParameter(string $fieldName, string $parameter, $value): void
+    {
+        $this->checkAllowedActions(['get']);
+        $this->checkAllowedResource(['products', 'combinations']);
+        
+        $this->addOption(
+            'price['.$fieldName.']['.$parameter.']',
+            $value
+        );
     }
 
     /**

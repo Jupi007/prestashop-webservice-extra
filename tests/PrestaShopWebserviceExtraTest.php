@@ -239,6 +239,194 @@ class PrestaShopWebserviceExtraTest extends TestCase
         ]);
     }
 
+    public function testAddPriceParameterWithWrongAction()
+    {
+        $this->expectException(PrestaShopWebserviceException::class);
+
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->add('product')
+            ->addCountryPriceParameter('field', 1);
+    }
+
+    public function testAddPriceParameterWithWrongResource()
+    {
+        $this->expectException(PrestaShopWebserviceException::class);
+
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->get('category')
+            ->addCountryPriceParameter('field', 1);
+    }
+
+    public function testAddCountryPriceParameter()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->get('products')
+            ->addCountryPriceParameter('field', 1);
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), [
+            'resource' => 'products',
+            'price[field][country]' => 1
+        ]);
+    }
+
+    public function testAddStatePriceParameter()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->get('products')
+            ->addStatePriceParameter('field', 1);
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), [
+            'resource' => 'products',
+            'price[field][state]' => 1
+        ]);
+    }
+
+    public function testAddPostcodePriceParameter()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->get('products')
+            ->addPostcodePriceParameter('field', 43000);
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), [
+            'resource' => 'products',
+            'price[field][postcode]' => 43000
+        ]);
+    }
+
+    public function testAddCurrencyPriceParameter()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->get('products')
+            ->addCurrencyPriceParameter('field', 1);
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), [
+            'resource' => 'products',
+            'price[field][currency]' => 1
+        ]);
+    }
+
+    public function testAddGroupPriceParameter()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->get('products')
+            ->addGroupPriceParameter('field', 1);
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), [
+            'resource' => 'products',
+            'price[field][group]' => 1
+        ]);
+    }
+
+    public function testAddQuantityPriceParameter()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->get('products')
+            ->addQuantityPriceParameter('field', 12);
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), [
+            'resource' => 'products',
+            'price[field][quantity]' => 12
+        ]);
+    }
+
+    public function testAddProductAttributePriceParameter()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->get('products')
+            ->addProductAttributePriceParameter('field', 1);
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), [
+            'resource' => 'products',
+            'price[field][product_attribute]' => 1
+        ]);
+    }
+
+    public function testAddDecimalsPriceParameter()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->get('products')
+            ->addDecimalsPriceParameter('field', 2);
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), [
+            'resource' => 'products',
+            'price[field][decimals]' => 2
+        ]);
+    }
+
+    public function testAddUseTaxPriceParameter()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->get('products')
+            ->addUseTaxPriceParameter('field', true);
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), [
+            'resource' => 'products',
+            'price[field][use_tax]' => true
+        ]);
+    }
+
+    public function testAddUseReductionPriceParameter()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->get('products')
+            ->addUseReductionPriceParameter('field', true);
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), [
+            'resource' => 'products',
+            'price[field][use_reduction]' => true
+        ]);
+    }
+
+    public function testAddOnlyReductionPriceParameter()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->get('products')
+            ->addOnlyReductionPriceParameter('field', true);
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), [
+            'resource' => 'products',
+            'price[field][only_reduction]' => true
+        ]);
+    }
+
+    public function testAddUseEcotaxPriceParameter()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice
+            ->get('products')
+            ->addUseEcotaxPriceParameter('field', true);
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), [
+            'resource' => 'products',
+            'price[field][use_ecotax]' => true
+        ]);
+    }
+
     public function testDisplayOption()
     {
         $webservice = $this->getWebserviceInstance();
@@ -401,6 +589,28 @@ class PrestaShopWebserviceExtraTest extends TestCase
         $this->assertEquals($webservice->getQueryOptions(), [
             'resource' => 'products',
             'schema' => 'schema'
+        ]);
+    }
+
+    public function testGetSynopsisSchema()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice->getSynopsisSchema('products');
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), [
+            'url' => 'https://shop.com/api/products?schema=synopsis'
+        ]);
+    }
+
+    public function testGetBlankSchema()
+    {
+        $webservice = $this->getWebserviceInstance();
+        $webservice->getBlankSchema('products');
+
+        $this->assertEquals($webservice->getQueryAction(), 'get');
+        $this->assertEquals($webservice->getQueryOptions(), [
+            'url' => 'https://shop.com/api/products?schema=blank'
         ]);
     }
 
