@@ -598,7 +598,7 @@ class PrestaShopWebserviceExtra
      * @param string $parameter Parameter
      * @param mixed $value Parameter value
      */
-    protected function addPriceParameter(string $fieldName, string $parameter, mixed $value): void
+    protected function addPriceParameter(string $fieldName, string $parameter, $value): void
     {
         $this->checkAllowedActions(['get']);
         $this->checkAllowedResource(['products', 'combinations']);
