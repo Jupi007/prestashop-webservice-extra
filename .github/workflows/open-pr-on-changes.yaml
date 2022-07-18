@@ -22,7 +22,7 @@ jobs:
             src: PSWebServiceLibrary.php,
             dest: upstream/PSWebServiceLibrary.php
           },
-      ]
+        ]
     steps:
       # Checkout code
       - uses: actions/checkout@v3
@@ -33,8 +33,16 @@ jobs:
           pushd /tmp
           git clone --branch ${UPSTEAM_BRANCH} --depth 1 ${UPSTREAM_REPO_URL}
           popd
-          rm -rf ${DEST}
-          cp -a /tmp/${PROJECT_DIR}/${SRC} ${DEST}
+          if [ ${DEST: -1} == '/' ]; then
+            mkdir -p ${DEST}
+            for src in ${SRC}; do
+              rm -rf ${DEST}/src
+              cp -a /tmp/${PROJECT_DIR}/${src} ${DEST}
+            done
+          else
+            rm -rf ${DEST}
+            cp -a /tmp/${PROJECT_DIR}/${SRC} ${DEST}
+          fi
           MODIFIED=$(git status --porcelain)
           if [ -n "$MODIFIED" ]; then
             hasModif="true"
@@ -48,7 +56,7 @@ jobs:
           PROJECT_DIR: ${{ matrix.buildenv.projectdir }}
       - name: Create or update Pull Request
         if: steps.checknewupstream.outputs.modified == 'true'
-        uses: peter-evans/create-pull-request@v3.7.0
+        uses: peter-evans/create-pull-request@v4
         with:
           commit-message: New upstream snapshot for ${{ matrix.buildenv.project }}
           title: Auto update new upstream snapshot for ${{ matrix.buildenv.project }}
