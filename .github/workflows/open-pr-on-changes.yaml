@@ -4,7 +4,7 @@ on:
     paths:
       - '.github/workflows/open-pr-on-changes.yaml'
   schedule:
-    - cron: '8 0 * * *'
+    - cron: '8 0 * * 0'
 
 jobs:
   refresh-upstream:
@@ -55,4 +55,4 @@ jobs:
           labels: automated pr, new upstream
           body: "[New upstream ${{ matrix.buildenv.project }} changes](https://github.com/ubuntu/yaru/actions?query=workflow%3A%22Update+PR+on+upstream+changes+once+landed+on+ubuntu%22) by GitHub Action"
           branch: upstream-${{ matrix.buildenv.localbranch }}-update
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TOKEN }}
