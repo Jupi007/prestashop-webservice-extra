@@ -835,7 +835,7 @@ class PrestaShopWebserviceExtra
 
         $this->addOption(
             $this->queryAction === 'add' ? 'postXml' : 'putXml',
-            $xml
+            $xml->asXML()
         );
 
         return $this;
