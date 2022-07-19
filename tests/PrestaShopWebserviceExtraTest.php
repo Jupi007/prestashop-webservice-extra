@@ -676,7 +676,7 @@ class PrestaShopWebserviceExtraTest extends TestCase
         $this->assertEquals($webservice->getQueryAction(), 'add');
         $this->assertEquals($webservice->getQueryOptions(), [
             'resource' => 'products',
-            'postXml' => new \SimpleXMLElement('<settings/>')
+            'postXml' => (new \SimpleXMLElement('<settings/>'))->asXML()
         ]);
     }
 
@@ -692,7 +692,7 @@ class PrestaShopWebserviceExtraTest extends TestCase
         $this->assertEquals($webservice->getQueryOptions(), [
             'resource' => 'products',
             'id' => 3,
-            'putXml' => new \SimpleXMLElement('<settings/>')
+            'putXml' => (new \SimpleXMLElement('<settings/>'))->asXML()
         ]);
     }
 
