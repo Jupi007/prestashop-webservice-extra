@@ -2,7 +2,7 @@
 
 <h1 align="center">PrestaShop Webservice lib Extra</h1>
 
-PrestaShop Webservice lib Extra is a fully object-oriented way to interact with a Prestashop webservice. It is build on top of the official Prestashop Webservice lib and include 100% functionality of the latter.
+PrestaShop Webservice lib Extra is a fully object-oriented way to interact with a Prestashop webservice. It is build on top of the official [Prestashop Webservice lib](https://github.com/PrestaShop/PrestaShop-webservice-lib) and include 100% functionality of the latter.
 
 Installation
 ============
