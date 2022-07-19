@@ -8,7 +8,7 @@ use Jupi\PrestaShopWebserviceExtra\Libraries\PrestaShopWebservice;
 use Jupi\PrestaShopWebserviceExtra\Libraries\PrestaShopWebserviceException;
 
 /**
- * 
+ *
 */
 class PrestaShopWebserviceExtra
 {
@@ -246,7 +246,7 @@ class PrestaShopWebserviceExtra
 
         return $this;
     }
-    
+
     /**
      * Add the "id" option to the query to target a specific resource
      * Only usable with "get", "edit" and "delete" actions
@@ -265,7 +265,7 @@ class PrestaShopWebserviceExtra
     /**
      * Add a new field filter with a single value
      * Only usable with "get" action
-     * 
+     *
      * @param string $field Field to filter
      * @param string $value Value to include
      * @return self
@@ -375,7 +375,7 @@ class PrestaShopWebserviceExtra
     public function addContainsFilter(string $field, string $value): self
     {
         $this->checkAllowedActions(['get']);
-        
+
         $this->addOption(
             'filter[' . $field . ']',
             '%[' . $value . ']%'
@@ -386,7 +386,7 @@ class PrestaShopWebserviceExtra
 
     /**
      * Add a specific "country" price field to the current request
-     * 
+     *
      * Only usable with "get" action.
      * Only usable with "products" and "combinations" resources.
      *
@@ -403,7 +403,7 @@ class PrestaShopWebserviceExtra
 
     /**
      * Add a specific "state" price field to the current request
-     * 
+     *
      * Only usable with "get" action.
      * Only usable with "products" and "combinations" resources.
      *
@@ -420,7 +420,7 @@ class PrestaShopWebserviceExtra
 
     /**
      * Add a specific "postcode" price field to the current request
-     * 
+     *
      * Only usable with "get" action.
      * Only usable with "products" and "combinations" resources.
      *
@@ -437,7 +437,7 @@ class PrestaShopWebserviceExtra
 
     /**
      * Add a specific "currency" price field to the current request
-     * 
+     *
      * Only usable with "get" action.
      * Only usable with "products" and "combinations" resources.
      *
@@ -454,7 +454,7 @@ class PrestaShopWebserviceExtra
 
     /**
      * Add a specific "group" price field to the current request
-     * 
+     *
      * Only usable with "get" action.
      * Only usable with "products" and "combinations" resources.
      *
@@ -471,7 +471,7 @@ class PrestaShopWebserviceExtra
 
     /**
      * Add a specific "quantity" price field to the current request
-     * 
+     *
      * Only usable with "get" action.
      * Only usable with "products" and "combinations" resources.
      *
@@ -488,7 +488,7 @@ class PrestaShopWebserviceExtra
 
     /**
      * Add a specific "product attribute" price field to the current request
-     * 
+     *
      * Only usable with "get" action.
      * Only usable with "products" and "combinations" resources.
      *
@@ -505,7 +505,7 @@ class PrestaShopWebserviceExtra
 
     /**
      * Add a specific "decimals" price field to the current request
-     * 
+     *
      * Only usable with "get" action.
      * Only usable with "products" and "combinations" resources.
      *
@@ -522,7 +522,7 @@ class PrestaShopWebserviceExtra
 
     /**
      * Add a specific "use tax" price field to the current request
-     * 
+     *
      * Only usable with "get" action.
      * Only usable with "products" and "combinations" resources.
      *
@@ -539,7 +539,7 @@ class PrestaShopWebserviceExtra
 
     /**
      * Add a specific "use reduction" price field to the current request
-     * 
+     *
      * Only usable with "get" action.
      * Only usable with "products" and "combinations" resources.
      *
@@ -556,7 +556,7 @@ class PrestaShopWebserviceExtra
 
     /**
      * Add a specific "only reduction" price field to the current request
-     * 
+     *
      * Only usable with "get" action.
      * Only usable with "products" and "combinations" resources.
      *
@@ -573,7 +573,7 @@ class PrestaShopWebserviceExtra
 
     /**
      * Add a specific "use ecotax" price field to the current request
-     * 
+     *
      * Only usable with "get" action.
      * Only usable with "products" and "combinations" resources.
      *
@@ -590,7 +590,7 @@ class PrestaShopWebserviceExtra
 
     /**
      * Add a specific price field to the current request
-     * 
+     *
      * Only usable with "get" action.
      * Only usable with "products" and "combinations" resources.
      *
@@ -602,7 +602,7 @@ class PrestaShopWebserviceExtra
     {
         $this->checkAllowedActions(['get']);
         $this->checkAllowedResource(['products', 'combinations']);
-        
+
         $this->addOption(
             'price['.$fieldName.']['.$parameter.']',
             $value
@@ -619,9 +619,9 @@ class PrestaShopWebserviceExtra
     public function display(array $display): self
     {
         $this->checkAllowedActions(['get']);
-        
+
         if (count($display) === 0) throw new PrestaShopWebserviceException('Display values array shouldn\'t be empty.');
-        
+
         $this->addOption(
             'display',
             '[' . implode(",", $display) . ']'
@@ -639,7 +639,7 @@ class PrestaShopWebserviceExtra
     public function displayFull(): self
     {
         $this->checkAllowedActions(['get']);
-        
+
         $this->addOption(
             'display',
             'full'
@@ -651,7 +651,7 @@ class PrestaShopWebserviceExtra
     /**
      * Sort query results by fields
      * Only usable with "get" action
-     * 
+     *
      * The sort array must have this shape:
      * ['field' => 'sort direction']
      * Possible values for the sort direction are 'ASC' and 'DESC' only
@@ -662,7 +662,7 @@ class PrestaShopWebserviceExtra
     public function sort(array $sortArray): self
     {
         $this->checkAllowedActions(['get']);
-        
+
         if (count($sortArray) === 0) throw new PrestaShopWebserviceException('Sort values array shouldn\'t be empty.');
 
         $sort = [];
@@ -701,7 +701,7 @@ class PrestaShopWebserviceExtra
     public function limit(int $limit, int $offset = 0): self
     {
         $this->checkAllowedActions(['get']);
-        
+
         $this->addOption(
             'limit',
             $offset > 0 ? $offset . ',' . $limit : $limit
@@ -743,18 +743,18 @@ class PrestaShopWebserviceExtra
     }
 
     /**
-     * Select the kind of resource's shema you want to retrieve 
+     * Select the kind of resource's shema you want to retrieve
      * Only usable with "get" action
      *
      * @param string $schema kind of shema
      * @return self
-     * 
+     *
      * @deprecated You should use `getSynopsisSchema()` or `getBlankSchema()` instead
      */
     public function schema(string $schema): self
     {
         $this->checkAllowedActions(['get']);
-        
+
         $this->addOption(
             'schema',
             $schema
@@ -832,10 +832,10 @@ class PrestaShopWebserviceExtra
     public function sendXml(\SimpleXMLElement $xml): self
     {
         $this->checkAllowedActions(['add', 'edit']);
-        
+
         $this->addOption(
             $this->queryAction === 'add' ? 'postXml' : 'putXml',
-            $xml
+            $xml->asXML()
         );
 
         return $this;
@@ -848,13 +848,11 @@ class PrestaShopWebserviceExtra
      */
     public function executeQuery(): \SimpleXMLElement
     {
-        $action = $this->queryAction;
-
-        if (!$action) {
-            return null;
+        if ($this->queryAction === null) {
+            throw new PrestaShopWebserviceException('You\'re trying to add a query option before defining the query action. The query action must always be defined before any query option.');
         }
 
-        $data = $this->webservice->$action($this->queryOptions);
+        $data = $this->webservice->{$this->queryAction}($this->queryOptions);
 
         $this->queryAction = null;
         $this->queryOptions = null;
